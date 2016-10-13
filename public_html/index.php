@@ -35,7 +35,7 @@
 				<p>Where</p>
 				<p>What Technology</p>
 				-->
-				<p>James is a little bored with his usual go-to recipes. He is cooking a big meal Saturday for his family, and would like to try something new. He has browsed through a list of currently popular recipes, and he has searched for pork shoulder in ingredients because he thinks that will be particularly tasty. He has narrowed down his ideas to a single recipe he would like to try. He has taken a look at the ingredients he thinks he will need. Sometimes he likes to print out the recipe, but usually he just keeps it open on his ipad. He has made a grocery list and picked up most of the ingredients, but forgot to get one of the spices needed. He scrolls thorugh the comments to see if any reviewers have replaced it, or done without. He cooks it up. His family loves it, and so does he! The leftovers tase great, and he is quite thrilled, so he leaves a comment about how it works well even with some modifications, and a 5-star review for the author.</p>
+				<p>James is a little bored with his usual go-to recipes. He is cooking a big meal Saturday for his family, and would like to try something new. He opens up his laptop and browses through a list of currently popular recipes, and he has searched for pork shoulder in ingredients because he thinks that will be particularly tasty. He has narrowed down his ideas to a single recipe he would like to try. He has taken a look at the ingredients he thinks he will need. Sometimes he likes to print out the recipe, but usually he just keeps it open on his ipad. He has made a grocery list and picked up most of the ingredients, but forgot to get one of the spices needed. He scrolls thorugh the comments to see if any reviewers have replaced it, or done without. He cooks it up. His family loves it, and so does he! The leftovers tase great, and he is quite thrilled, so he leaves a comment about how it works well even with some modifications, and a 5-star review for the author.</p>
 			</section>
 			<section>
 				<h1>Interaction Flow</h1>
@@ -61,6 +61,7 @@
 								<li>imageId (primary key)</li>
 								<li>imageFile</li>
 								<li>recipeId (foreign key)</li>
+								<li>1:N relationship with Recipe (1 Recipe has many photos)</li>
 							</ul>
 						</li>
 						<li><b>Recipe</b>
@@ -72,8 +73,10 @@
 								<li>prepTime</li>
 								<li>cookTime</li>
 								<li>footnotes</li>
+
 							</ul>
 						</li>
+						<!-- omit comments for this project
 						<li><b>Comments</b>
 							<ul>
 								<li>commentId (primary key)</li>
@@ -82,18 +85,20 @@
 								<li>commentText</li>
 								<li>recipeId (foreign key)</li>
 							</ul>
-						</li>
+						</li> -->
 						<li><b>Profile</b>
 							<ul>
 								<li>userId (primary key)</li>
-								<li>emailAddress</li>
+								<li>userEmail</li>
 								<li>avatarId</li>
+								<li>1:N relationship with Recipe - one user has many recipes</li>
 							</ul>
 						</li>
 						<li><b>Favorites (WEAK)</b>
 							<ul>
 								<li>recipeId (foreign key)</li>
 								<li>userId (foreign key)</li>
+								<li>M:N relationship between favorites and users - one user can favorite many different recipes, and a recipe can be favorited by many different people</li>
 							</ul>
 						</li>
 					</ul>
