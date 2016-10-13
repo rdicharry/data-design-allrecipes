@@ -42,40 +42,43 @@
 			</section>
 			<section>
 				<h1>Conceptual Model</h1>
-
-					<h2>Photos</h2>
-						<ul>
-							<li>imageId (primary key)</li>
-							<li>imageFile</li>
-							<li>recipeId (foreign key)</li>
-						</ul>
-
-					<h2>Recipe</h2>
-						<ul>
-							<li>ingredients list (separate into its own table to be able to cross-reference in ingredient?)</li>
-							<li>directions</li>
-							<li>recipeId (primary key)</li>
-							<li>userId (foreign key)</li>
-							<li>prepTime</li>
-							<li>cookTime</li>
-							<li>footnotes</li>
-						</ul>
-
-					<h2>Comments</h2>
-						<ul>
-							<li>commentId (primary key)</li>
-							<li>rating (number of stars)</li>
-							<li>userId</li>
-							<li>commentText</li>
-							<li>recipeId (foreign key)</li>
+					<ul>
+						<li><b>Photos</b>
+							<ul>
+								<li>imageId (primary key)</li>
+								<li>imageFile</li>
+								<li>recipeId (foreign key)</li>
+							</ul>
+						</li>
+						<li><b>Recipe</b>
+							<ul>
+								<li>ingredients list (separate into its own table to be able to cross-reference in ingredient?)</li>
+								<li>directions</li>
+								<li>recipeId (primary key)</li>
+								<li>userId (foreign key)</li>
+								<li>prepTime</li>
+								<li>cookTime</li>
+								<li>footnotes</li>
+							</ul>
+						</li>
+						<li><b>Comments</b>
+							<ul>
+								<li>commentId (primary key)</li>
+								<li>rating (number of stars)</li>
+								<li>userId</li>
+								<li>commentText</li>
+								<li>recipeId (foreign key)</li>
+							</ul>
+						</li>
+						<li><b>Profile</b>
+							<ul>
+								<li>userId (primary key)</li>
+								<li>emailAddress</li>
+								<li>avatarId</li>
+							</ul>
+						</li>
 					</ul>
 
-					<h2>Profile</h2>
-						<ul>
-							<li>userId (primary key)</li>
-							<li>emailAddress</li>
-							<li>avatarId</li>
-					</ul>
 
 			</section>
 		</main>
