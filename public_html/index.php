@@ -39,6 +39,19 @@
 			</section>
 			<section>
 				<h1>Interaction Flow</h1>
+				<p><b>Goal:</b>James would like to make something impressive for family diner on Saturday.</p>
+				<ol>
+					<li>Go to allrecipes.com. -> Front page appears with a list of currently popular recipes
+					</li>
+					<li>Look through popular recipes for a minute. Decide to search for pork shoulder. -> A list of user-submitted recipes including pork shoulder appears.
+					</li>
+					<li>Select a recipe from the list with a great photo and good reviews. -> The ingredients list, direction, photo, comments/reviews, etc. appears
+					</li>
+					<li>(User hits "back" button to repeat previous step until user finds a recipe they like.)</li>
+					<li>User "favorites" the selected recipe to be able to come back to it later -> Recipe added to user's favorites list.</li>
+					<li>(User makes shopping list, buys stuff, searches for recipe in mobile device.)</li>
+					<li>User cooks from recipe, returns later to add a review and comment. -> Comment is displayed to recipe author and any subsequent recipe viewers.</li>
+				</ol>
 			</section>
 			<section>
 				<h1>Conceptual Model</h1>
@@ -75,6 +88,12 @@
 								<li>userId (primary key)</li>
 								<li>emailAddress</li>
 								<li>avatarId</li>
+							</ul>
+						</li>
+						<li><b>Favorites (WEAK)</b>
+							<ul>
+								<li>recipeId (foreign key)</li>
+								<li>userId (foreign key)</li>
 							</ul>
 						</li>
 					</ul>
