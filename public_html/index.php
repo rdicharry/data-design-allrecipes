@@ -39,12 +39,42 @@
 				<h1>Interaction Flow</h1>
 			</section>
 			<section>
-				<h1>Entities</h1>
-			<ul>
-				<li>Photos</li>
-				<li>Recipe: Ingredients list, directions</li>
-				<li>Reviews/Comments</li>
-			</ul>
+				<h1>Conceptual Model</h1>
+
+					<h2>Photos</h2>
+						<ul>
+							<li>imageId (primary key)</li>
+							<li>imageFile</li>
+							<li>recipeId (foreign key)</li>
+						</ul>
+
+					<h2>Recipe</h2>
+						<ul>
+							<li>ingredients list (separate into its own table to be able to cross-reference in ingredient)</li>
+							<li>directions</li>
+							<li>recipeId (primary key)</li>
+							<li>userId (foreign key)</li>
+							<li>prepTime</li>
+							<li>cookTime</li>
+							<li>footnotes</li>
+						</ul>
+
+					<h2>Comments</h2>
+						<ul>
+							<li>commentId (primary key)</li>
+							<li>rating (number of stars)</li>
+							<li>userId</li>
+							<li>commentText</li>
+							<li>recipeId (foreign key)</li>
+					</ul>
+
+					<h2>Profile</h2>
+						<ul>
+							<li>userId (primary key)</li>
+							<li>emailAddress</li>
+							<li>avatarId</li>
+					</ul>
+
 			</section>
 		</main>
 	</body>
