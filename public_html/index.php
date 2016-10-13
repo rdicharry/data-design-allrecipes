@@ -28,11 +28,13 @@
 			</section>
 			<section>
 				<h1>Use Case</h1>
+				<!-- Use case should contain the following info:
 				<p>Main Goal</p>
 				<p>Who</p>
 				<p>What</p>
 				<p>Where</p>
 				<p>What Technology</p>
+				-->
 				<p>James is a little bored with his usual go-to recipes. He is cooking a big meal Saturday for his family, and would like to try something new. He has browsed through a list of currently popular recipes, and he has searched for pork shoulder in ingredients because he thinks that will be particularly tasty. He has narrowed down his ideas to a single recipe he would like to try. He has taken a look at the ingredients he thinks he will need. Sometimes he likes to print out the recipe, but usually he just keeps it open on his ipad. He has made a grocery list and picked up most of the ingredients, but forgot to get one of the spices needed. He scrolls thorugh the comments to see if any reviewers have replaced it, or done without. He cooks it up. His family loves it, and so does he! The leftovers tase great, and he is quite thrilled, so he leaves a comment about how it works well even with some modifications, and a 5-star review for the author.</p>
 			</section>
 			<section>
@@ -50,7 +52,7 @@
 
 					<h2>Recipe</h2>
 						<ul>
-							<li>ingredients list (separate into its own table to be able to cross-reference in ingredient)</li>
+							<li>ingredients list (separate into its own table to be able to cross-reference in ingredient?)</li>
 							<li>directions</li>
 							<li>recipeId (primary key)</li>
 							<li>userId (foreign key)</li>
