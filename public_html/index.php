@@ -50,7 +50,7 @@
 			<section>
 				<h1>Conceptual Model</h1>
 					<ul>
-						<li><b>Images</b>
+						<li><b>Image</b>
 							<ul>
 								<li>imageId (primary key)</li>
 								<li>imageFile</li>
