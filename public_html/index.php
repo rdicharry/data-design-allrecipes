@@ -92,7 +92,7 @@
 			</section>
 			<section>
 				<h1>Entity Relationship Diagram</h1>
-				<img src="img/allrecipes-ERD-5.png" alt="Entity Relationship Diagram">
+				<img src="img/allrecipes-ERD-6.png" alt="Entity Relationship Diagram">
 
 			</section>
 		</main>
