@@ -75,7 +75,7 @@
 							<ul>
 								<li>profileUserId (primary key)</li>
 								<li>profileEmail</li>
-								<li>profileAvatarId</li>
+								<li>profileAvatarImage</li>
 								<li>1:N relationship with Recipe - one user has many recipes</li>
 							</ul>
 						</li>
@@ -92,7 +92,7 @@
 			</section>
 			<section>
 				<h1>Entity Relationship Diagram</h1>
-				<img src="img/allrecipes-ERD-4.png" alt="Entity Relationship Diagram">
+				<img src="img/allrecipes-ERD-5.png" alt="Entity Relationship Diagram">
 
 			</section>
 		</main>

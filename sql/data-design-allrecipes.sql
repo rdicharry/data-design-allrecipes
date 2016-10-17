@@ -51,7 +51,7 @@ CREATE TABLE profile (
 	-- avatarId is a foreign key
 	-- should this reference an image file directly?
 	-- VARCHAR(260)
-	profileAvatarId INT UNSIGNED,
+	profileAvatarImage VARCHAR(260),
 	UNIQUE(profileEmail),
 	-- index foreign key
 
