@@ -12,9 +12,7 @@
 			<h1>Data Design Project - Allrecipes</h1>
 		</header>
 
-		<!-- Content goes here -->
 		<main>
-			<!-- begin section 1 -->
 			<section>
 				<h1>Persona</h1>
 				<ul>
@@ -72,16 +70,7 @@
 
 							</ul>
 						</li>
-						<!-- omit comments for this project
-						<li><b>Comments</b>
-							<ul>
-								<li>commentId (primary key)</li>
-								<li>rating (number of stars)</li>
-								<li>userId</li>
-								<li>commentText</li>
-								<li>recipeId (foreign key)</li>
-							</ul>
-						</li> -->
+
 						<li><b>Profile</b>
 							<ul>
 								<li>profileUserId (primary key)</li>
@@ -99,6 +88,11 @@
 						</li>
 					</ul>
 
+
+			</section>
+			<section>
+				<h1>Entity Relationship Diagram</h1>
+				<img src="img/allrecipes-ERD-4.png" alt="Entity Relationship Diagram">
 
 			</section>
 		</main>
