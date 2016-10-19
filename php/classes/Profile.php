@@ -58,14 +58,31 @@ class Profile {
 	}
 
 	/*
-	 *
+	 * accessor method for profile user id
+	 *@return int|null values of profile user id
 	 */
 	public function getProfileUserId() {
 		return ($this->profileUserId);
 	}
 
+	/*
+	 * accessor method for profile email
+	 * @return string containing profile's email address
+	 */
+	public function getProfileEmail() {
+		return ($this->profileEmail);
+	}
+
+	/**
+	 * accessor method for profile avatar image
+	 * @return string values of image path
+	 */
+	public function getProfileAvatarImage() {
+		return ($this->profileAvatarImage);
+	}
+
 	public function setProfileUserId(int $newProfileUserId) {
-		$this->$profileUserId = $newProfileUserId;
+		$this->profileUserId = $newProfileUserId;
 	}
 
 
