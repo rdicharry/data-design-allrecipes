@@ -32,25 +32,27 @@ class Profile {
 	 * @param int $newProfileUserId
 	 * @param string $newProfileEmail
 	 * @param string $newProfileAvatarImage
+	 * @throws \InvalidArgumentException
 	 * @throws \Exception
 	 * @throws \TypeError
+	 * @throws \RangeException
+	 * @throws \UnexpectedValueException
 	 */
 	public function __construct(int $newProfileUserId, string $newProfileEmail, string $newProfileAvatarImage) {
 
+		// rethrow exceptions to the caller
 		try {
 			$this->setProfileUserId($newProfileUserId);
 			$this->setProfileEmail($newProfileEmail);
 			$this->setProfileAvatarImage($newProfileAvatarImage);
 		} catch(\InvalidArgumentException $invalidArgument) {
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-		}
-			// catch(\RangeException $rangeException) {
-			//	throw(new \RangeExcpetion($range->getMessage(), 0, $range));
-			//}
-		catch(\TypeError $typeError) {
-
+		} catch(\RangeException $rangeException) {
+			throw(new \RangeException($rangeException->getMessage(), 0, $rangeException));
+		} catch(\TypeError $typeError) {
 			throw(new \TypeError($typeError->getMessage(), 0, $typeError));
-
+		} catch(\UnexpectedValueException $unexpectedValueException) {
+			throw(new \UnexpectedValueException($unexpectedValueException->getMessage(), 0, $unexpectedValueException));
 		} catch(\Exception $exception) {
 			throw(new \Exception($exception->getMessage(), 0, $exception));
 		}
@@ -81,8 +83,72 @@ class Profile {
 		return ($this->profileAvatarImage);
 	}
 
-	public function setProfileUserId(int $newProfileUserId) {
+	/**
+	 * Set the user Id for this profile. Input is validated (should be a positive integer).
+	 * Note: a TypeError exception will be thrown if the input is not an integer (or null).
+	 * @param int $newProfileUserId
+	 * @throws \UnexpectedValueException if
+	 */
+	public function setProfileUserId(int $newProfileUserId = null) {
+
+		// if the profile user id is null, this is a new profile that does not yet have a mysql assigned id.
+		if($newProfileUserId === null) {
+			$this->profileUserId = null;
+			return;
+		}
+
+		// verify the user id is valid
+		if($newProfileUserId < 0) {
+			throw(new \RangeException("profile user id should be positive"));
+		}
+
 		$this->profileUserId = $newProfileUserId;
+
+	}
+
+	/**
+	 * Set the email address accociated with this profile.
+	 * @param string $newProfileEmail a valid email address associated with this profile
+	 * @throws \RangeException if the email address is too long
+	 * @throws \InvalidArgumentException if the email is invalid or empty
+	 */
+	public function setProfileEmail(string $newProfileEmail) {
+		// sanatize email input
+		// note: additional email validation can be provided by requiring the user to manually validate the email before the account becomes active.
+		$newProfileEmail = trim($newProfileEmail);
+		$newProfileEmail = filter_var($newProfileEmail, FILTER_SANITIZE_STRING);
+		if(empty($newProfileEmail) === true) {
+			throw(new \InvalidArgumentException("invalid or empty email provided"));
+		}
+
+		// verify email values will fit into database
+		if(strlen($newProfileEmail) > 128) {
+			throw(new \RangeException("email address too long"));
+		}
+
+		// store email
+		$this->profileEmail = $newProfileEmail;
+
+	}
+
+	/**
+	 * Set the image file associated with this profile.
+	 * @param string $newProfileAvatarImage file name of avatar image
+	 * @throws \InvalidArgumentException if file name is empty or invalid
+	 */
+	public function setProfileAvatarImage(string $newProfileAvatarImage) {
+		// sanatize input
+		$newProfileAvatarImage = trim($newProfileAvatarImage);
+		$newProfileAvatarImage = filter_var($newProfileAvatarImage, FILTER_SANITIZE_STRING);
+		if(empty($newProfileAvatarImage) === true) {
+			throw(new \InvalidArgumentException("invalid or empty avatar image file name"));
+		}
+
+		//TODO upload image and construct local path
+
+		//store local path
+		$this->profileAvatarImage = $newProfileAvatarImage;
+
 	}
 
 
