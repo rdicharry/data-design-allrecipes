@@ -98,7 +98,7 @@ class Profile {
 		}
 
 		// verify the user id is valid
-		if($newProfileUserId < 0) {
+		if($newProfileUserId <= 0) {
 			throw(new \RangeException("profile user id should be positive"));
 		}
 
