@@ -10,6 +10,10 @@ namespace Edu\Cnm\Rdicharry\DataDesignAllrecipes;
  */
 class Recipe {
 
+	const MAX_INGREDIENTS_TEXT_LENGTH = 5000;
+	const MAX_FOOTNOTES_TEXT_LENGTH = 420;
+	const MAX_DIRECTIONS_TEXT_LENGTH = 10000;
+
 	/**
 	 * A list of ingredients and amounts stored as a string.
 	 *
@@ -152,8 +156,8 @@ class Recipe {
 		}
 
 		// verify ingredients content will fit int the database
-		if(strlen($newRecipeIngredients) > 5000) {
-			throw(new \RangeException("recipe ingredients content too large"));
+		if(strlen($newRecipeIngredients) > self::MAX_INGREDIENTS_TEXT_LENGTH) {
+			throw(new \RangeException("recipe ingredients content exceeds" . self::MAX_INGREDIENTS_TEXT_LENGTH . " characters"));
 		}
 
 		// store the content
@@ -268,8 +272,8 @@ class Recipe {
 		}
 
 		//verify content will fit in database
-		if(strlen($newFootnotes) > 420) {
-			throw(new \RangeException("footnotes content too large"));
+		if(strlen($newFootnotes) > self::MAX_FOOTNOTES_TEXT_LENGTH) {
+			throw(new \RangeException("footnotes content exceeds" . self::MAX_FOOTNOTES_TEXT_LENGTH . " characters"));
 		}
 
 		// store content
@@ -293,8 +297,8 @@ class Recipe {
 		}
 
 		// verify recipe directions will fit into database
-		if(strlen($newDirections) > 10000) {
-			throw(new \RangeException("recipe directions content too large"));
+		if(strlen($newDirections) > self::MAX_DIRECTIONS_TEXT_LENGTH) {
+			throw(new \RangeException("recipe directions content exceeds" . self::MAX_DIRECTIONS_TEXT_LENGTH . " characters"));
 		}
 
 		// store directions

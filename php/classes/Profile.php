@@ -9,6 +9,11 @@ namespace Edu\Cnm\Rdicharry\DataDesignAllrecipes;
  */
 class Profile {
 
+
+	/**
+	 * maximum allowed file length in the mySQL database.
+	 */
+	const IMAGE_FILE_LENGTH = 260;
 	/*
 	 * Id for the profile, this is the primary key.
 	 * @var int $profileUserId
@@ -135,6 +140,7 @@ class Profile {
 	 * Set the image file associated with this profile.
 	 * @param string $newProfileAvatarImage file name of avatar image
 	 * @throws \InvalidArgumentException if file name is empty or invalid
+	 * @throws \RangeException if file size exceeds maximum allowed in database (IMAGE_FILE_LENGTH)
 	 */
 	public function setProfileAvatarImage(string $newProfileAvatarImage) {
 		// sanatize input
@@ -143,9 +149,16 @@ class Profile {
 		if(empty($newProfileAvatarImage) === true) {
 			throw(new \InvalidArgumentException("invalid or empty avatar image file name"));
 		}
+		// can we find the image file?
+		if(!file_exists($newProfileAvatarImage)) {
+			throw(new \InvalidArgumentException("cound not find file with path: " . $newProfileAvatarImage));
+		}
 
 		//TODO upload image and construct local path
 
+		if(strlen($newProfileAvatarImage > self::IMAGE_FILE_LENGTH)) {
+			throw(new \RangeException("image file name exceeds " . self::IMAGE_FILE_LENGTH . " characters"));
+		}
 		//store local path
 		$this->profileAvatarImage = $newProfileAvatarImage;
 
