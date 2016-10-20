@@ -31,12 +31,15 @@ class Image {
 	 */
 	private $imageRecipeId;
 
-	//TODO constructor goes here
 	/**
 	 * Construct a new Image with the specified id, image filename, and the id $imageRecipeId to associate it to a specified recipe.
 	 * @param int|null $newImageId the id of this image or null if it is not yet entered in the database.
 	 * @param string $imageFile the file name of the image.
 	 * @param int $imageRecipeId the id of the recipe with which the image is associated.
+	 * @throws \InvalidArgumentException if the inputs are invalid.
+	 * @throws \RangeException if $newImgaeId or $newImageRecipeId are not positive, or if filename $newImageFile is too long.
+	 * @throws \TypeError if the inputs do not match the requested types.
+	 * @throws \Exception for other types of exceptions.
 	 */
 	public function __construct(int $newImageId, string $newImageFile, int $newImageRecipeId) {
 		// rethrow exceptions to caller
