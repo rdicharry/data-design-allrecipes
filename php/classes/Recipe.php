@@ -55,7 +55,7 @@ class Recipe {
 	// TODO might be represented as an array of strings?
 	private $recipeDirections;
 
-	// constructor goes here
+	// TODO constructor goes here
 	/**
 	 * accessor method for recipe ingredients
 	 * @return string a list of the ingredients and amounts needed for the recipe
@@ -89,16 +89,58 @@ class Recipe {
 	}
 
 	/**
-	 *
+	 *accessor method for cook time
 	 * @return int cook time in minutes
 	 */
 	public function getRecipeCookTime() {
 		return ($this->recipeCookTime);
 	}
 
+	/**
+	 * accessor method for recipe footnotes
+	 * @return string the footnotes for this recipe
+	 */
 	public function getRecipeFootnotes() {
 		return ($this->recipeFootnotes);
 	}
 
+	/**
+	 * mutator method for recipe ingredient content
+	 *
+	 * @param string $newRecipeIngredients the ingredients list associated with this recipe
+	 * @throws \InvalidArgumentExcpetion if $newRecipeIngredients empty, invalid or unsafe
+	 * @throws \RangeException if $newRecipeIngredients more than 5000 bytes.
+	 * @throws \TypeError if $newRecipeIngredients is not a string
+	 */
+	public function setRecipeIngredients(string $newRecipeIngredients) {
+		//verify ingredients content
+		$newRecipeIngredients = trim($newRecipeIngredients);
+		$newRecipeIngredients = filter_var($newRecipeIngredients, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newRecipeIngredients) === true) {
+			throw(new \InvalidArgumentException("invalid or empty recipe ingredients"));
+		}
+
+		// verify ingredients content will fit int the database
+		if(strlen($newRecipeIngredients) > 5000) {
+			throw(new \RangeException("recipe ingredients content too large"));
+		}
+
+		// store the content
+		$this->recipeIngredients = $newRecipeIngredients;
+	}
+
+	public function setRecipeId(int $newRecipeId = null) {
+		// if recipe id is null, this is a new recipe that does not yet have a mysql assigned to it
+		if($newRecipeId === null) {
+			$this->recipeId = null;
+			return;
+		}
+
+		// verify recipe id is positive
+		if($newRecipeId <= 0) {
+
+		}
+
+	}
 
 }
