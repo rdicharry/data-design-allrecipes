@@ -55,6 +55,19 @@ class Recipe {
 	// TODO might be represented as an array of strings?
 	private $recipeDirections;
 
+	/**
+	 * Recipe constructor.
+	 * @param string $newRecipeIngredients ingredients list for the recipe
+	 * @param int|null $newRecipeId id of this Recipe or null if this is a new Recipe.
+	 * @param int $newRecipeUserId id of the user profile that created this Reicpe.
+	 * @param int|null $newRecipePrepTime time in minutes to prepare the recipe (not including cooking time) or null if not specified by user.
+	 * @param int|null $newRecipeCookTime time in minutes to cook the recipe (not including prep time) or null if not specified by user.
+	 * @param string|null $newRecipeFootnotes optional footnotes for the recipe (or null if not specified by user).
+	 * @throws \RangeException if data out of bounds (strings too long, integers not positive).
+	 * @throws \TypeError if data provided is of incorrect type.
+	 * @throws \InvalidArgumentException if data is invalid/insecure.
+	 * @throws \Exception some other exception occurs.
+	 */
 	public function __construct(string $newRecipeIngredients, int $newRecipeId, int $newRecipeUserId, int $newRecipePrepTime, int $newRecipeCookTime, string $newRecipeFootnotes) {
 		// catch exceptions and rethrow to caller
 		try {
