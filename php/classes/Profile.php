@@ -164,5 +164,75 @@ class Profile {
 
 	}
 
+	/**
+	 * Inserts this profile into mySQL.
+	 * @param \PDO $pdo PDO connection object.
+	 * @throws \PDOException if there is a mySQL related error.
+	 * @throws \TypeError if $pdo is not a PDO connecton object.
+	 */
+	public function insert(\PDO $pdo) {
+		// enforce this profileId is not null - do not insert a profile that already exists
+		if($this->profileUserId === null) {
+			throw(new \PDOException("profileUserId already exists, cannot insert into database"));
+		}
+
+		// create query template
+		$query = "INSERT INTO profile(profileUserId, profileEmail, profileAvatarImage) VALUES (:profileUserId, :profileEmail, :profileAvatarImage)";
+		$statement = $pdo->prepare($query);
+
+		// bind member variables to placeholders in the template
+		$parameters = ["profileUserId" => $this->profileUserId, "profileEmail" => $this->profileEmail, "profileAvatarImage" => $this->profileAvatarImage];
+		$statement->execute($parameters);
+
+		// get newly created profileUserId, and update into this object
+		$this->profileUserId = intval($pdo->lastInsertId());
+
+	}
+
+	/**
+	 * Deletes this profile from mySQL.
+	 * @param \PDO $pdo PDO connection object.
+	 * @throws \PDOException when mySQL related error occur.
+	 * @throws \TypeError if $pdo is not a PDO connection object.
+	 */
+	public function delete(\PDO $pdo) {
+		// enforce this profileUserId is not null (don't delete a non-existent profile)
+		if($this->profileUserId === null) {
+			throw(new \PDOException("unable to delete a profile that does not exist"));
+		}
+
+		//create query template
+		$query = "DELETE FROM profile WHERE profileUserId = :profileUserId";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the placeholder in the template
+		$parameters = ["profileUserId" => $this->profileUserId];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * Update this Profile in mySQL.
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when $pdo is not a PDO connection object
+	 */
+	public function update(\PDO $pdo) {
+		// check that the profileUserId is not null - do not update a profile that has not been inserted.
+		if($this->profileUserId === null) {
+			throw(new \PDOException("unable to update a profile that does not exist"));
+		}
+
+		// create query template
+		$query = "UPDATE profile SET profileEmail=:profileEmail, profileAvatarImage =:profileAvatarImage WHERE profileUserId =:profileUserId";
+		$statement = $pdo->prepare($query);
+
+		// bind parameters to member variables
+		$parameters = ["profileEmail" => $this->profileEmail, "profileAvatarImage" => $this->profileAvatarImage, "profileUserId" => $this->profileUserId];
+
+		// execute statement
+		$statement->execute($parameters);
+	}
+
 
 }

@@ -315,4 +315,77 @@ class Recipe {
 		$this->recipeDirections = $newDirections;
 
 	}
+
+	/**
+	 * Inserts the recipe into mySQL
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur.
+	 * @throws \TypeError if $pdo is not a PDO connection object.
+	 */
+	public function insert(\PDO $pdo) {
+
+		// in order to insert the recipe, the  recipeId should be null
+		// (i.e. it has not yet been inserted)
+		if($this->recipeId != null) {
+			throw(new \PDOException("attempted to insert recipe, but recipeId already exists in the database"));
+		}
+
+		//create query template
+		$query = "INSERT INTO recipe(recipeIngredients, recipeDirections, recipeId, recipeUserId, recipePrepTime, recipeCookTime, recipeFootnotes) VALUES (:recipeIngredients, :recipeDirections, :recipeId, :recipeUserId, :recipePrepTime, :recipeCookTime, :recipeFootnotes )";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the placeholders in the template
+		$parameters = ["recipeIngredients" => $this->recipeIngredients, "recipeDirections" => $this->recipeDirections, "recipeId" => $this->recipeId, "recipeUserId" => $this->recipeUserId, "recipePrepTime" => $this->recipePrepTime, "recipeCookTime" => $this->recipeCookTime, "recipeFootnotes" => $this->recipeFootnotes];
+
+		$statement->execute($parameters);
+
+		//update the null recipeId with what mySQL just gave us
+		$this->recipeId = intval($pdo->lastInsertId());
+
+	}
+
+	/**
+	 * Deletes this recipe from mySQL.
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur.
+	 * @throws \TypeError if $pdo is not a PDO connection object.
+	 */
+	public function delete(\PDO $pdo) {
+		// enforce the recipe is not null
+		// that is, don't delete a recipe that has not been inserted
+		if($this->recipeId === null) {
+			throw(new \PDOException("unable to delete a recipe that does not have an entry"));
+		}
+
+		//create query template
+		$query = "DELETE FROM recipe WHERE recipeId = :recipeId";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holder in the template
+		$parameters = ["recipeId" => $this->recipeId];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * updates the recipe in mySQL
+	 * @param \PDO $pdo the PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object.
+	 */
+	public function update(\PDO $pdo) {
+		// check that this recipe is not null
+		if($this->recipeId === null) {
+			throw(new \PDOException("unable to update a recipe that does not exist"));
+		}
+
+		//create query template // not liekly to need to update recipeUserId!? TODO
+		$query = "UPDATE recipe SET recipeIngredients=:recipeIngredients, recipeDirections=:recipeDirections, recipeUserId=:recipeUserId, recipePrepTime=:recipePrepTime, recipeCookTime=:recipeCookTime, recipeFootnotes=:recipeFootnotes WHERE recipeId=:recipeId";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holders in the template
+		$parameters = ["recipeIngredients" => $this->recipeIngredients, "recipeDirections" => $this->recipeDirections, "recipeUserId" => $this->recipeUserId, "recipePrepTime" => $this->recipePrepTime, "recipeCookTime" => $this->recipeCookTime, "recipeFootnotes" => $this->recipeFootnotes, "recipeId" => $this->recipeId];
+		$statement->execute($parameters);
+	}
+
+
 }
