@@ -100,46 +100,6 @@ class Recipe {
 	}
 
 	/**
-	 * Accessor method for recipe id
-	 * @return int value of recipe id
-	 */
-	public function getRecipeId() {
-		return ($this->recipeId);
-	}
-
-	/**
-	 * Accessor method for recipe user id
-	 * @return int userId of the creator of this recipe
-	 */
-	public function getRecipeUserId() {
-		return ($this->recipeUserId);
-	}
-
-	/**
-	 * Accessor method for recipe prep time (time in minutes to prepare ingredients for cooking)
-	 * @return int prep time in minutes or null if not prep time was specified by the user.
-	 */
-	public function getRecipePrepTime() {
-		return ($this->recipePrepTime);
-	}
-
-	/**
-	 * Accessor method for cook time
-	 * @return int cook time in minutes
-	 */
-	public function getRecipeCookTime() {
-		return ($this->recipeCookTime);
-	}
-
-	/**
-	 * Accessor method for recipe footnotes
-	 * @return string the footnotes for this recipe
-	 */
-	public function getRecipeFootnotes() {
-		return ($this->recipeFootnotes);
-	}
-
-	/**
 	 * mutator method for recipe ingredient content
 	 *
 	 * @param string $newRecipeIngredients the ingredients list associated with this recipe
@@ -154,7 +114,6 @@ class Recipe {
 		if(empty($newRecipeIngredients) === true) {
 			throw(new \InvalidArgumentException("invalid or empty recipe ingredients"));
 		}
-
 		// verify ingredients content will fit int the database
 		if(strlen($newRecipeIngredients) > self::MAX_INGREDIENTS_TEXT_LENGTH) {
 			throw(new \RangeException("recipe ingredients content exceeds" . self::MAX_INGREDIENTS_TEXT_LENGTH . " characters"));
@@ -162,6 +121,14 @@ class Recipe {
 
 		// store the content
 		$this->recipeIngredients = $newRecipeIngredients;
+	}
+
+	/**
+	 * Accessor method for recipe id
+	 * @return int value of recipe id
+	 */
+	public function getRecipeId() {
+		return ($this->recipeId);
 	}
 
 	/**
@@ -188,6 +155,15 @@ class Recipe {
 	}
 
 	/**
+	 * Accessor method for recipe user id
+	 * @return int userId of the creator of this recipe
+	 */
+	public function getRecipeUserId() {
+		return ($this->recipeUserId);
+	}
+
+
+	/**
 	 * Mutator method for recipe user id. sets the user id associated with this recipe
 	 * @param int $newRecipeUserId a positive integer user id (profile user id) number
 	 * @throws \InvalidArgumentException if the id number is null
@@ -207,6 +183,16 @@ class Recipe {
 		//store the new recipe user id
 		$this->recipeUserId = $newRecipeUserId;
 	}
+
+
+	/**
+	 * Accessor method for recipe prep time (time in minutes to prepare ingredients for cooking)
+	 * @return int prep time in minutes or null if not prep time was specified by the user.
+	 */
+	public function getRecipePrepTime() {
+		return ($this->recipePrepTime);
+	}
+
 
 	/**
 	 *  Mutator method for $recipePrepTime. The amount of time in minutes to prepare (but not cook) the recipe.
@@ -230,6 +216,14 @@ class Recipe {
 	}
 
 	/**
+	 * Accessor method for cook time
+	 * @return int cook time in minutes
+	 */
+	public function getRecipeCookTime() {
+		return ($this->recipeCookTime);
+	}
+
+	/**
 	 * Mutator method for $recipeCookTime. The amount of time in minutes to cook the recipe (not including prep time.
 	 * @param int|null $newCookTime a positive integer cook time in minutes or null if the cook time was not specified by the user.
 	 * @throws \TypeError if the provided values is not an integer
@@ -249,6 +243,14 @@ class Recipe {
 		$this->recipeCookTime = $newCookTime;
 	}
 
+
+	/**
+	 * Accessor method for recipe footnotes
+	 * @return string the footnotes for this recipe
+	 */
+	public function getRecipeFootnotes() {
+		return ($this->recipeFootnotes);
+	}
 
 	/**
 	 * Mutator method for $recipeFootnotes.
@@ -278,6 +280,14 @@ class Recipe {
 
 		// store content
 		$this->recipeFootnotes = $newFootnotes;
+	}
+
+	/**
+	 * Accessor method for recipe directions.
+	 * @return string containging the directions for making the recipe.
+	 */
+	public function getRecipeDirections() {
+		return $this->recipeDirections;
 	}
 
 	/**
