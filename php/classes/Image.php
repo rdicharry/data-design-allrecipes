@@ -34,8 +34,8 @@ class Image {
 	/**
 	 * Construct a new Image with the specified id, image filename, and the id $imageRecipeId to associate it to a specified recipe.
 	 * @param int|null $newImageId the id of this image or null if it is not yet entered in the database.
-	 * @param string $imageFile the file name of the image.
-	 * @param int $imageRecipeId the id of the recipe with which the image is associated.
+	 * @param string $newImageFile the file name of the image.
+	 * @param int $newImageRecipeId the id of the recipe with which the image is associated.
 	 * @throws \InvalidArgumentException if the inputs are invalid.
 	 * @throws \RangeException if $newImgaeId or $newImageRecipeId are not positive, or if filename $newImageFile is too long.
 	 * @throws \TypeError if the inputs do not match the requested types.
@@ -154,5 +154,77 @@ class Image {
 
 	}
 
+	/**
+	 * Insert this Image into mySQL.
+	 * @param PDO $pdo PDO connection object.
+	 * @throws \PDOException when mySQL related errors occur.
+	 * @throws \TypeError if $pdo is not a PDO connection object.
+	 */
+	public function insert(\PDO $pdo) {
+		// if the image is null, it has not yet been assigned an id by mySQL
+		if($this->imageId === null) {
+			throw(new \PDOException("cannot insert image - image already has an id associated with it"));
+		}
+
+		// create query template
+		$query = "INSERT INTO image(imageId, imageFile, imageRecipeId) VALUES(:imageId, :imageFile, :imageRecipeId) ";
+		$statement = $pdo->prepare($query);
+
+		// bind parameters
+		$parameters = ["imageId" => $this->imageId, "imageFile" => $this->imageFile, "imageRecipeId" => $this->imageRecipeId];
+
+		// execute statement
+		$statement->execute($parameters);
+
+		// update the null imageId with mySQL generated id.
+		$this->imageId = intval($pdo->lastInsertId());
+	}
+
+	/**
+	 * Delete this Image from mySQL.
+	 * @param PDO $pdo PDO connection object.
+	 * @throws \PDOException when mySQL related errors occur.
+	 * @throws \TypeError if $pdo is not a PDO connection object.
+	 */
+	public function delete(\PDO $pdo) {
+		// do not delete image if the id is null (meaning it is not yet
+		// inserted into the database
+		if($this->imageId === null) {
+			throw(new \PDOException("unable to delete an image that does not have an id"));
+		}
+
+		// create query template
+		$query = "DELETE FROM image WHERE imageId = :imageId";
+		$statement = $pdo->prepare($query);
+
+		// bind parameter and execute statement
+		$parameter = ["imageId" => $this->imageId];
+		$statement->execute($parameter);
+
+	}
+
+	/**
+	 * Updates the entry for this Image in mySQL.
+	 * @param PDO $pdo PDO connection object.
+	 * @throws \PDOException when mySQL related errors occur.
+	 * @throws \TypeError if $pdo is not a PDO connection object.
+	 */
+	public function update(\PDO $pdo) {
+		// check that the id is not null - we cannot update an image
+		// that is not yet entered into the database
+		if($this->imageId === null) {
+			throw(new \PDOException("unable to update an image that does not exist"));
+		}
+
+		// create query template
+		$query = "UPDATE image SET imageFile = :imageFile, imageRecipeId = :imageRecipeId WHERE imageId =:imageId";
+		$statement = $pdo->prepare($query);
+
+		// bind parameters and execute statement
+		$parameters = ["imageFile" => $this->imageFile, "imageRecipeId" => $this->imageRecipeId, "imageId" => $this->imageId];
+		$statement->execute($parameters);
+
+
+	}
 
 }
